@@ -9,20 +9,20 @@ def front_page(request):
     # return render(request, "index_css.html")
 
 
-def add_contact(request):
+def add_Amiibo(request):
     success = False
-    added_contact = None
+    added_Amiibo = None
     if request.method == "POST":
-        form = ContactForm(request.POST)
+        form = AmiiboForm(request.POST)
         if form.is_valid():
-            new_contact = form.save()
+            new_Amiibo = form.save()
             success = True
-            added_contact = new_contact
+            added_Amiibo = new_Amiibo
             return render(
                 request,
-                "add_contact_css.html", # "add_contact_css.html",
+                "add_Amiibo_css.html", # "add_Amiibo_css.html",
                 {"form": form,
-                 "added_contact": added_contact,
+                 "added_Amiibo": added_Amiibo,
                  "success": success},
             )
     else:
@@ -99,10 +99,10 @@ def edit_contact(request, contact_id, page_number):
     )
 
 
-def delete_contact(request, contact_id, page_number):
+def delete_Amiibo(request, contact_id, page_number):
     print("[DBG] delete_contact called for ID:", contact_id)
     if request.method == "POST":
-        contact = get_object_or_404(Contact, id=contact_id)
-        contact.delete()
+        Amiibo = get_object_or_404(Amiibo, id=contact_id)
+        Amiibo.delete()
         # Redirect to the same page number after delete
         return redirect("edit_contact", contact_id=contact_id, page_number=page_number)
