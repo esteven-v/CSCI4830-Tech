@@ -1,22 +1,22 @@
 from django.urls import path
 from .views import front_page
-from .views import add_contact
-from .views import search_contact
-from .views import edit_contact
-from .views import delete_contact
+from .views import add_Amiibo
+from .views import search_Amiibo
+from .views import edit_Amiibo
+from .views import delete_Amiibo
 
 urlpatterns = [
     path("", front_page, name="front_page"),
-    path("add/", add_contact, name="add_contact"),
-    path("search/", search_contact, name="search_contact"),
+    path("add/", add_Amiibo, name="add_Amiibo"),
+    path("search/", search_Amiibo, name="search_Amiibo"),
     path(
-        "edit_contact/<int:contact_id>/<int:page_number>/",
-        edit_contact,
-        name="edit_contact",
+        "edit_Amiibo/<int:Amiibo_id>/<int:page_number>/",
+        edit_Amiibo,
+        name="edit_Amiibo",
     ),
     path(
-        "delete_contact/<int:contact_id>/<int:page_number>/",
-        delete_contact,
-        name="delete_contact",
+        "delete_Amiibo/<int:Amiibo_id>/<int:page_number>/",
+        delete_Amiibo,
+        name="delete_Amiibo",
     ),
 ]

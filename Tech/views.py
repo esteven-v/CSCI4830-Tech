@@ -26,20 +26,22 @@ def add_Amiibo(request):
                  "success": success},
             )
     else:
-        form = ContactForm()
+        form = AmiiboForm()
     return render(
         request,
-        "add_contact_css.html", # "add_contact_css.html",
+        "add_Amiibo_css.html", # "add_Amiibo_css.html",
         {"form": form,
-         "added_contact": added_contact,
+         "added_Amiibo": added_Amiibo,
          "success": success},
     )
 
 
-def search_contact(request):
+def search_Amiibo(request):
     page_number = request.GET.get("page", 1)
     name = request.GET.get("name", "").strip()
-    email = request.GET.get("email", "").strip()
+    series = request.GET.get("email", "").strip()
+    is_active = request.GET.get("is_active", "false").lower() in ["true", "1", "t", "y", "yes"]
+
 
     if request.method == "POST":
         name = request.POST.get("name", "").strip()
