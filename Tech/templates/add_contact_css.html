@@ -3,7 +3,7 @@
 {% block content %}
 <div class="container mt-4">
   <h1 class="mb-4 text-primary">Add a New Amiibo to your collection</h1>
-  <!-- Contact Form -->
+  <!-- Amiibo Form -->
   <form method="POST" class="border p-4 rounded bg-light shadow-sm">
     {% csrf_token %}
     <div class="mb-3">
@@ -15,7 +15,7 @@
   <!-- Success Message -->
   {% if success %}
   <div class="alert alert-success mt-4" role="alert">
-    <strong>Success!</strong> The Amiibo has been successfully added your Collection!.
+    <strong>Success!</strong> The Amiibo has been successfully added to your Collection!.
   </div>
   
   <!-- Display Added Contact -->
@@ -24,9 +24,9 @@
       <h5 class="card-title">Amiibo Added</h5>
       <p class="card-text">
         <strong>Name:</strong> {{ added_amiibo.name }} <br />
-        <strong>series:</strong> {{ added_amiibo.email }} <br />
-        <strong>is_owned:</strong> {{ added_amiibo.email }} <br />
-        <strong>condition_status:</strong> {{ added_amiibo.email }}
+        <strong>Series:</strong> {{ added_amiibo.series }} <br />
+        <strong>Owned:</strong> {% if added_amiibo.is_owned %} Yes {% else %} No {% endif %} <br />
+        <strong>Condition:</strong> {{ added_amiibo.condition_status }}
       </p>
     </div>
   </div>
