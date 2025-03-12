@@ -1,0 +1,80 @@
+{% extends 'base.html' %} {% block title %}Search Contact{% endblock %}
+<!-- -->
+{% block content %}
+<div>
+  <h1>Search Contact</h1>
+  <form method="POST">
+    {% csrf_token %}
+    <div>
+      <label for="name">Name:</label>
+      <input type="text" id="name" name="name" value="{{ name_query }}" />
+    </div>
+    <div>
+      <label for="email">Email:</label>
+      <input type="text" id="email" name="email" value="{{ email_query }}" />
+    </div>
+    <button type="submit">Search Contact</button>
+  </form>
+
+  <!-- Search Results -->
+  {% if contacts %}
+  <div>
+    <h2>Search Results</h2>
+    <p>Query: {{ name_query }} {{ email_query }}</p>
+    <ul>
+      {% for contact in contacts %}
+      <li>
+        <div>
+          <span>#{{ contact.id }}</span>
+          <span>{{ contact.name }}</span>
+          <span>{{ contact.email }}</span>
+        </div>
+      </li>
+      {% endfor %}
+    </ul>
+
+    <!-- Pagination Controls -->
+    <nav>
+      <ul>
+        {% if contacts.has_previous %}
+        <li>
+          <a href="?page=1&name={{ name_query }}&email={{ email_query }}"
+            >First</a
+          >
+        </li>
+        <li>
+          <a
+            href="?page={{ contacts.previous_page_number }}& name={{ name_query }}& email={{ email_query }}"
+            >Previous</a
+          >
+        </li>
+        {% endif %}
+        <li>
+          <span>
+            Page {{ contacts.number }} of {{ contacts.paginator.num_pages }}
+          </span>
+        </li>
+        {% if contacts.has_next %}
+        <li>
+          <a
+            href="?page={{ contacts.next_page_number }}&name={{ name_query }}&email={{ email_query }}"
+            >Next</a
+          >
+        </li>
+        <li>
+          <a
+            href="?page={{ contacts.paginator.num_pages }}&name={{ name_query }}&email={{ email_query }}"
+            >Last</a
+          >
+        </li>
+        {% endif %}
+      </ul>
+    </nav>
+  </div>
+
+  {% elif request.method == "POST" and not contacts %}
+  <!-- No Results Message -->
+  <div>No contacts found. Please try again.</div>
+  {% endif %}
+</div>
+{% endblock %}

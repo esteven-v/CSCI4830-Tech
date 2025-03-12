@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block title %}Add Amiibo{% endblock %}
+{% block content %}
+<h1>Add a New Amiibo to your collection</h1>
+<!-- Contact Form -->
+<form method="POST">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button type="submit">Add Contact</button>
+</form>
+<!-- Success Message -->
+{% if success %}
+<p><strong>Success!</strong> The Amiibo has been successfully added to your collection!</p>
+<!-- Display Added Contact -->
+<h3>Amiibo Added</h3>
+<p>
+  <strong>Name:</strong> {{ added_contact.name }} <br />
+  <strong>Email:</strong> {{ added_contact.phone }}
+</p>
+{% endif %}
+{% endblock %}

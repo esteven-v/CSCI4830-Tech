@@ -1,0 +1,27 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Welcome to the Contact Manager</title>
+  </head>
+  <body>
+    <div>
+      <h1>Hello World</h1>
+      <p>I also have the hello world are part of the tech exersise 2.</p>
+      <p>
+        Manage your contacts efficiently with the Contact Manager web
+        application.
+      </p>
+      <p>This application allows you to:</p>
+      <ul>
+        <li>Add new contacts with details such as name and phone number.</li>
+        <li>View a list of all saved contacts directly on the dashboard.</li>
+        <li>Search for specific contacts using their name or phone number.</li>
+      </ul>
+      <p>Click below to get started:</p>
+      <a href="{% url 'add_contact' %}">Go to Contact Manager</a>
+    </div>
+  </body>
+</html>
