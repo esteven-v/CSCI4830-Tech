@@ -11,10 +11,10 @@
 <!-- Success Message -->
 {% if success %}
 <p><strong>Success!</strong> The Amiibo has been successfully added to your collection!</p>
-<!-- Display Added Contact -->
+<!-- Display Added amiibo -->
 <h3>Amiibo Added</h3>
 <p>
-  <strong>Name:</strong> {{ added_contact.name }} <br />
+  <strong>Name:</strong> {{ added_amiibo.name }} <br />
   <strong>Series:</strong> {{ added_amiibo.series }} <br />
   <strong>Owned:</strong> {% if added_amiibo.is_owned %} Yes {% else %} No {% endif %} <br />
   <strong>Condition:</strong> {{ added_amiibo.condition_status }}
