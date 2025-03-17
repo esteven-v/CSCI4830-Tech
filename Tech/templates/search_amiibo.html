@@ -1,33 +1,49 @@
-{% extends 'base.html' %} {% block title %}Search Contact{% endblock %}
-<!-- -->
+{% extends 'base.html' %}
+
+{% block title %}Search Amiibo{% endblock %}
+
 {% block content %}
 <div>
-  <h1>Search Contact</h1>
+  <h1>Search Amiibo</h1>
+  
+  <!-- Form for searching Amiibo -->
   <form method="POST">
     {% csrf_token %}
-    <div>
+    <div class="form-group">
       <label for="name">Name:</label>
-      <input type="text" id="name" name="name" value="{{ name_query }}" />
+      <input type="text" id="name" name="name" value="{{ name_query }}" class="form-control" placeholder="Enter name" />
     </div>
-    <div>
-      <label for="email">Email:</label>
-      <input type="text" id="email" name="email" value="{{ email_query }}" />
+
+    <div class="form-group">
+      <label for="series">Series:</label>
+      <input type="text" id="series" name="series" value="{{ series_query }}" class="form-control" placeholder="Enter Series Amiibo is from" />
     </div>
-    <button type="submit">Search Amiibo in Your Collection!!</button>
+
+    <div class="form-group">
+      <label for="condition_status">Condition:</label>
+      <select id="condition_status" name="condition_status" class="form-control">
+        <option value="box" {% if condition_status_query == 'box' %}selected{% endif %}>BOX</option>
+        <option value="not_box" {% if condition_status_query == 'not_box' %}selected{% endif %}>Not in BOX</option>
+      </select>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Search Amiibo in Your Collection</button>
   </form>
 
   <!-- Search Results -->
-  {% if contacts %}
+  {% if amiibos %}
   <div>
     <h2>Search Results</h2>
-    <p>Query: {{ name_query }} {{ email_query }}</p>
+    <p>Query: Name - {{ name_query }}, Series - {{ series_query }}, Condition - {{ condition_status_query }}</p>
     <ul>
-      {% for contact in contacts %}
+      {% for amiibo in amiibos %}
       <li>
         <div>
-          <span>#{{ contact.id }}</span>
-          <span>{{ contact.name }}</span>
-          <span>{{ contact.email }}</span>
+          <span>#{{ amiibo.id }}</span>
+          <span>{{ amiibo.name }}</span>
+          <span>{{ amiibo.series }}</span>
+          <span>{{ amiibo.get_condition_status_display }}</span>
+          <span>{% if amiibo.is_owned %}Owned{% else %}Not Owned{% endif %}</span>
         </div>
       </li>
       {% endfor %}
@@ -35,46 +51,34 @@
 
     <!-- Pagination Controls -->
     <nav>
-      <ul>
-        {% if contacts.has_previous %}
-        <li>
-          <a href="?page=1&name={{ name_query }}&email={{ email_query }}"
-            >First</a
-          >
+      <ul class="pagination">
+        {% if amiibos.has_previous %}
+        <li class="page-item">
+          <a class="page-link" href="?page=1&name={{ name_query }}&series={{ series_query }}&condition_status={{ condition_status_query }}">First</a>
         </li>
-        <li>
-          <a
-            href="?page={{ contacts.previous_page_number }}& name={{ name_query }}& email={{ email_query }}"
-            >Previous</a
-          >
+        <li class="page-item">
+          <a class="page-link" href="?page={{ amiibos.previous_page_number }}&name={{ name_query }}&series={{ series_query }}&condition_status={{ condition_status_query }}">Previous</a>
         </li>
         {% endif %}
-        <li>
-          <span>
-            Page {{ contacts.number }} of {{ contacts.paginator.num_pages }}
-          </span>
+        <li class="page-item disabled">
+          <span class="page-link">Page {{ amiibos.number }} of {{ amiibos.paginator.num_pages }}</span>
         </li>
-        {% if contacts.has_next %}
-        <li>
-          <a
-            href="?page={{ contacts.next_page_number }}&name={{ name_query }}&email={{ email_query }}"
-            >Next</a
-          >
+        {% if amiibos.has_next %}
+        <li class="page-item">
+          <a class="page-link" href="?page={{ amiibos.next_page_number }}&name={{ name_query }}&series={{ series_query }}&condition_status={{ condition_status_query }}">Next</a>
         </li>
-        <li>
-          <a
-            href="?page={{ contacts.paginator.num_pages }}&name={{ name_query }}&email={{ email_query }}"
-            >Last</a
-          >
+        <li class="page-item">
+          <a class="page-link" href="?page={{ amiibos.paginator.num_pages }}&name={{ name_query }}&series={{ series_query }}&condition_status={{ condition_status_query }}">Last</a>
         </li>
         {% endif %}
       </ul>
     </nav>
   </div>
-
-  {% elif request.method == "POST" and not contacts %}
+  
+  {% elif request.method == "POST" and not amiibos %}
   <!-- No Results Message -->
-  <div>No contacts found. Please try again.</div>
+  <div>No Amiibos found. Please try again.</div>
   {% endif %}
 </div>
 {% endblock %}
+

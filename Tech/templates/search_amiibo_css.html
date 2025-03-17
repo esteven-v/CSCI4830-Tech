@@ -1,9 +1,11 @@
-{% extends 'base.html' %} {% block title %}Search Amiibo{% endblock %}
+{% extends 'base.html' %} 
+{% block title %}Search Amiibo{% endblock %}
+
 <!-- Content -->
 {% block content %}
 <div class="container mt-4">
   <!-- Page Title -->
-  <h1 class="mb-4 text-primary">Search Contact</h1>
+  <h1 class="mb-4 text-primary">Search Amiibo</h1>
 
   <!-- Search Form -->
   <form method="POST" class="border p-4 bg-light rounded shadow-sm">
@@ -19,52 +21,65 @@
         value="{{ name_query }}"
       />
     </div>
+
     <div class="mb-3">
-      <label for="email" class="form-label">Email:</label>
+      <label for="series" class="form-label">Series:</label>
       <input
         type="text"
-        id="email"
-        name="email"
+        id="series"
+        name="series"
         class="form-control"
-        placeholder="Enter email"
-        value="{{ email_query }}"
+        placeholder="Enter Amiibo's Series"
+        value="{{ series_query }}"
       />
     </div>
-    <button type="submit" class="btn btn-primary">Search Contact</button>
+
+    <div class="mb-3">
+      <label for="is_owned" class="form-label">Owned:</label>
+      <input
+        type="checkbox"
+        id="is_owned"
+        name="is_owned"
+        class="form-check-input"
+        {% if is_owned_query %}
+          checked
+        {% endif %}
+      />
+      <label for="is_owned" class="form-check-label">Is Owned</label>
+    </div>
+
+    <div class="mb-3">
+      <label for="condition_status" class="form-label">Condition:</label>
+      <select
+        id="condition_status"
+        name="condition_status"
+        class="form-control"
+      >
+        <option value="box" {% if condition_status_query == 'box' %}selected{% endif %}>BOX</option>
+        <option value="not_box" {% if condition_status_query == 'not_box' %}selected{% endif %}>Not in BOX</option>
+      </select>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Search Amiibo</button>
   </form>
 
   <!-- Search Results -->
-  {% if contacts %}
+  {% if amiibos %}
   <div class="mt-4">
     <h2 class="text-success">Search Results.</h2>
-    <p>Query: {{ name_query }} {{ email_query }}</p>
+    <p>Query: {{ name_query }} | {{ series_query }} | Owned: {{ is_owned_query }} | Condition: {{ condition_status_query }}</p>
     <ul class="list-group">
-      {% for contact in contacts %}
-      <li
-        class="list-group-item d-flex justify-content-between align-items-center"
-      >
+      {% for amiibo in amiibos %}
+      <li class="list-group-item d-flex justify-content-between align-items-center">
         <div class="d-flex align-items-center">
-          <strong style="width: 70px; text-align: left"
-            >#{{ contact.id }}</strong
-          >
+          <strong style="width: 70px; text-align: left">#{{ amiibo.id }}</strong>
           <span
-            style="
-              width: 200px;
-              overflow: hidden;
-              text-overflow: ellipsis;
-              white-space: nowrap;
-            "
-            >{{ contact.name }}</span
-          >
+            style="width: 200px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap"
+          >{{ amiibo.name }}</span>
           <span
-            style="
-              width: 250px;
-              overflow: hidden;
-              text-overflow: ellipsis;
-              white-space: nowrap;
-            "
-            >{{ contact.email }}</span
-          >
+            style="width: 250px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap"
+          >{{ amiibo.series }}</span>
+          <span>{{ amiibo.condition_status|capfirst }}</span>
         </div>
       </li>
       {% endfor %}
@@ -73,43 +88,27 @@
     <!-- Pagination Controls -->
     <nav aria-label="Page navigation" class="mt-4">
       <ul class="pagination justify-content-center">
-        {% if contacts.has_previous %}
+        {% if amiibos.has_previous %}
         <li class="page-item">
-          <a
-            class="page-link"
-            href="?page=1&name={{ name_query }}&email={{ email_query }}"
-            >First</a
-          >
+          <a class="page-link" href="?page=1&name={{ name_query }}&series={{ series_query }}&is_owned={{ is_owned_query }}&condition_status={{ condition_status_query }}">First</a>
         </li>
         <li class="page-item">
-          <a
-            class="page-link"
-            href="?page={{ contacts.previous_page_number }}&name={{ name_query }}&email={{ email_query }}"
-            >Previous</a
-          >
+          <a class="page-link" href="?page={{ amiibos.previous_page_number }}&name={{ name_query }}&series={{ series_query }}&is_owned={{ is_owned_query }}&condition_status={{ condition_status_query }}">Previous</a>
         </li>
         {% endif %}
 
         <li class="page-item active">
           <span class="page-link">
-            Page {{ contacts.number }} of {{ contacts.paginator.num_pages }}
+            Page {{ amiibos.number }} of {{ amiibos.paginator.num_pages }}
           </span>
         </li>
 
-        {% if contacts.has_next %}
+        {% if amiibos.has_next %}
         <li class="page-item">
-          <a
-            class="page-link"
-            href="?page={{ contacts.next_page_number }}&name={{ name_query }}&email={{ email_query }}"
-            >Next</a
-          >
+          <a class="page-link" href="?page={{ amiibos.next_page_number }}&name={{ name_query }}&series={{ series_query }}&is_owned={{ is_owned_query }}&condition_status={{ condition_status_query }}">Next</a>
         </li>
         <li class="page-item">
-          <a
-            class="page-link"
-            href="?page={{ contacts.paginator.num_pages }}&name={{ name_query }}&email={{ email_query }}"
-            >Last</a
-          >
+          <a class="page-link" href="?page={{ amiibos.paginator.num_pages }}&name={{ name_query }}&series={{ series_query }}&is_owned={{ is_owned_query }}&condition_status={{ condition_status_query }}">Last</a>
         </li>
         {% endif %}
       </ul>
@@ -119,7 +118,7 @@
   {% elif request.method == "POST" %}
   <!-- No Results Message -->
   <div class="alert alert-warning mt-4" role="alert">
-    No contacts found. Please try again.
+    No Amiibos found. Please try again.
   </div>
   {% endif %}
 </div>
