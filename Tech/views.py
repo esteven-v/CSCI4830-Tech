@@ -15,7 +15,7 @@ def add_Amiibo(request):
     if request.method == "POST":
         form = AmiiboForm(request.POST)
         if form.is_valid():
-            new_Amiibo = form.save()
+            new_amiibo = form.save()
             success = True
             added_amiibo = new_amiibo
             return render(
@@ -66,13 +66,13 @@ def search_Amiibo(request):
          "series": series},
     )
 
-def edit_Amiibo(request, amiibo_id, page_number):
+def edit_Amiibo(request, Amiibo_id, page_number):
     pn = request.GET.get("page", page_number)
-    print(f"[DBG] edit_amiibo {amiibo_id}, {page_number}, {pn} <<<")
+    print(f"[DBG] edit_amiibo {Amiibo_id}, {page_number}, {pn} <<<")
     success = False
 
     if request.method == "POST":
-        amiibo = amiibo.objects.get(id=amiibo_id)
+        amiibo = amiibo.objects.get(id=Amiibo_id)
         name = request.POST.get("name")
         series = request.POST.get("series")
         condition_status = request.POST.get("condition_status")
@@ -98,15 +98,15 @@ def edit_Amiibo(request, amiibo_id, page_number):
         {
             "amiibos": page_obj,
             "success": success,
-            "updated_amiibo_id": amiibo_id,
+            "updated_Amiibo_id": Amiibo_id,
         },
     )
 
 
-def delete_Amiibo(request, amiibo_id, page_number):
-    print("[DBG] delete_amiibo called for ID:", amiibo_id)
+def delete_Amiibo(request, Amiibo_id, page_number):
+    print("[DBG] delete_amiibo called for ID:", Amiibo_id)
     if request.method == "POST":
-        amiibo = get_object_or_404(Amiibo, id=amiibo_id)
+        amiibo = get_object_or_404(Amiibo, id=Amiibo_id)
         amiibo.delete()
         # Redirect to the same page number after delete
-        return redirect("edit_amiibo", amiibo_id=amiibo_id, page_number=page_number)
+        return redirect("edit_amiibo", Amiibo_id=Amiibo_id, page_number=page_number)

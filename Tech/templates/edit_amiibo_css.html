@@ -21,7 +21,7 @@
       <tbody>
         {% for amiibo in amiibos %}
         <tr id="amiibo-row-{{ amiibo.id }}" {% if success and amiibo.id == updated_amiibo_id %} class="table-success" {% endif %}>
-          <form method="POST" action="{% url 'edit_amiibo' amiibo.id amiibos.number %}">
+          <form method="POST" action="{% url 'edit_Amiibo' amiibo.id amiibos.number %}">
             {% csrf_token %}
             <input type="hidden" name="page" value="{{ amiibos.number }}" />
             <td>{{ amiibo.id }}</td>
@@ -39,7 +39,7 @@
             <td class="d-flex gap-2">
               <button type="submit" class="btn btn-primary btn-sm">Save</button>
           </form>
-          <form method="POST" action="{% url 'delete_amiibo' amiibo.id amiibos.number %}" onsubmit="return confirm('Are you sure you want to delete this amiibo?');">
+          <form method="POST" action="{% url 'delete_Amiibo' amiibo.id amiibos.number %}" onsubmit="return confirm('Are you sure you want to delete this amiibo?');">
             {% csrf_token %}
             <button type="submit" class="btn btn-danger btn-sm">Delete</button>
           </form>

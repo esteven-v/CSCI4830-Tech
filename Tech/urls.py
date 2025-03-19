@@ -12,11 +12,11 @@ urlpatterns = [
     path(
         "edit_Amiibo/<int:Amiibo_id>/<int:page_number>/",
         edit_Amiibo,
-        name="edit_Amiibo",
+        name="edit_amiibo",
     ),
     path(
         "delete_Amiibo/<int:Amiibo_id>/<int:page_number>/",
         delete_Amiibo,
-        name="delete_Amiibo",
+        name="delete_amiibo",
     ),
 ]
