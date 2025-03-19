@@ -36,7 +36,7 @@ def add_Amiibo(request):
     )
 
 
-def search_amiibo(request):
+def search_Amiibo(request):
     page_number = request.GET.get("page", 1)
     name = request.GET.get("name", "").strip()
     series = request.GET.get("series", "").strip()
@@ -66,7 +66,7 @@ def search_amiibo(request):
          "series": series},
     )
 
-def edit_amiibo(request, amiibo_id, page_number):
+def edit_Amiibo(request, amiibo_id, page_number):
     pn = request.GET.get("page", page_number)
     print(f"[DBG] edit_amiibo {amiibo_id}, {page_number}, {pn} <<<")
     success = False
@@ -103,7 +103,7 @@ def edit_amiibo(request, amiibo_id, page_number):
     )
 
 
-def delete_amiibo(request, amiibo_id, page_number):
+def delete_Amiibo(request, amiibo_id, page_number):
     print("[DBG] delete_amiibo called for ID:", amiibo_id)
     if request.method == "POST":
         amiibo = get_object_or_404(Amiibo, id=amiibo_id)
