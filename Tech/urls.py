@@ -17,6 +17,6 @@ urlpatterns = [
     path(
         "delete_Amiibo/<int:Amiibo_id>/<int:page_number>/",
         delete_Amiibo,
-        name="delete_amiibo",
+        name="delete_Amiibo",
     ),
 ]
