@@ -40,7 +40,7 @@ def search_Amiibo(request):
     page_number = request.GET.get("page", 1)
     name = request.GET.get("name", "").strip()
     series = request.GET.get("series", "").strip()
-    
+
     if request.method == "POST":
         name = request.POST.get("name", "").strip()
         series = request.POST.get("series", "").strip()
@@ -49,8 +49,8 @@ def search_Amiibo(request):
 
     if name or series:
         amiibos = Amiibo.objects.filter(
-            name__icontains=name, series_icontains=series
-        ).order_by("id")  # Order by name to ensure consistency
+            name__icontains=name, series__icontains=series
+        ).order_by("id")  # Order by id to ensure consistency
     else:
         amiibos = Amiibo.objects.all().order_by("id")  # Order the results
 
@@ -63,8 +63,9 @@ def search_Amiibo(request):
         # "search_amiibo.html",
         {"amiibos": page_obj,
          "name_query": name,
-         "series": series},
+         "series_query": series},  # Align with naming convention from search_contact
     )
+
 
 def edit_Amiibo(request, Amiibo_id, page_number):
     pn = request.GET.get("page", page_number)
@@ -72,11 +73,12 @@ def edit_Amiibo(request, Amiibo_id, page_number):
     success = False
 
     if request.method == "POST":
-        amiibo = amiibo.objects.get(id=Amiibo_id)
+        amiibo = Amiibo.objects.get(id=Amiibo_id)
         name = request.POST.get("name")
         series = request.POST.get("series")
         condition_status = request.POST.get("condition_status")
         is_owned = request.POST.get("is_owned") == 'on'
+        
         if amiibo.name != name or amiibo.series != series or amiibo.condition_status != condition_status or amiibo.is_owned != is_owned:
             amiibo.name = name
             amiibo.series = series
@@ -87,10 +89,9 @@ def edit_Amiibo(request, Amiibo_id, page_number):
 
     amiibo_list = Amiibo.objects.all()
     paginator = Paginator(amiibo_list, 10)
-    page_number = request.POST.get(
-        "page", request.GET.get("page", page_number)
-    )
+    page_number = request.POST.get("page", request.GET.get("page", page_number))
     page_obj = paginator.get_page(page_number)
+    
     return render(
         request,
         # "edit_amiibo.html",
@@ -102,11 +103,11 @@ def edit_Amiibo(request, Amiibo_id, page_number):
         },
     )
 
-
 def delete_Amiibo(request, Amiibo_id, page_number):
-    print("[DBG] delete_amiibo called for ID:", Amiibo_id)
+    print(f"[DBG] delete_amiibo called for ID: {Amiibo_id}")
     if request.method == "POST":
         amiibo = get_object_or_404(Amiibo, id=Amiibo_id)
         amiibo.delete()
         # Redirect to the same page number after delete
-        return redirect("edit_amiibo", Amiibo_id=Amiibo_id, page_number=page_number)
+        return redirect("edit_Amiibo", Amiibo_id=Amiibo_id, page_number=page_number)
+
