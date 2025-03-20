@@ -1,44 +1,143 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Welcome to the Contact Manager</title>
-    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}" />
-  </head>
-  <body>
-    <div class="container mt-5">
-      <div class="text-center mb-4">
-        <h1 class="display-4">Welcome</h1>
-        <p class="lead">
-          Manage your contacts efficiently with the Contact Manager web
-          application.
-        </p>
-      </div>
-      <div class="card shadow">
-        <div class="card-body">
-          <h5 class="card-title">Features</h5>
-          <p class="card-text">This application allows you to:</p>
-          <ul class="list-group list-group-flush">
-            <li class="list-group-item">
-              Add new contacts with details such as name and phone number.
-            </li>
-            <li class="list-group-item">
-              View a list of all saved contacts directly on the dashboard.
-            </li>
-            <li class="list-group-item">
-              Search for specific contacts using their name or phone number.
-            </li>
-          </ul>
-          <div class="mt-4 text-center">
-            <a href="{% url 'add_Amiibo' %}" class="btn btn-primary">
-              Go to Contact Manager
-            </a>
-          </div>
-        </div>
-      </div>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Welcome to the Amiibo Collection!</title>
+
+  <!-- Google Fonts for a cleaner, more professional typography -->
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet" />
+
+  <style>
+    /* General Styling */
+    body {
+      font-family: 'Roboto', sans-serif;
+      background-color: #f4f7fa;
+      color: #333;
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 40px;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      color: #2a3d66;
+      margin-bottom: 20px;
+    }
+
+    p {
+      font-size: 1.1rem;
+      line-height: 1.6;
+    }
+
+    .lead {
+      font-size: 1.3rem;
+      color: #777;
+      margin-bottom: 30px;
+    }
+
+    .section-heading {
+      font-size: 1.6rem;
+      font-weight: 500;
+      color: #2a3d66;
+      margin-bottom: 20px;
+    }
+
+    /* Feature List */
+    ul {
+      list-style-type: none;
+      padding: 0;
+    }
+
+    li {
+      font-size: 1.1rem;
+      margin: 10px 0;
+      padding-left: 15px;
+      position: relative;
+    }
+
+    li::before {
+      content: '✔';
+      position: absolute;
+      left: 0;
+      color: #4caf50;
+      font-size: 1.3rem;
+    }
+
+    /* Button Styling */
+    .btn {
+      background-color: #2a3d66;
+      color: white;
+      padding: 12px 20px;
+      text-decoration: none;
+      font-size: 1.2rem;
+      border-radius: 4px;
+      display: inline-block;
+      transition: background-color 0.3s ease;
+    }
+
+    .btn:hover {
+      background-color: #4caf50;
+    }
+
+    /* Card-like Container */
+    .card-container {
+      background-color: white;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      padding: 30px;
+      margin-bottom: 40px;
+      background: #ffffff;
+      text-align: left;
+    }
+
+    .card-body {
+      padding: 20px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <!-- Main Section -->
+    <div class="text-center">
+      <h1>Welcome to the Amiibo Collection!</h1>
+      <p class="lead">This application is designed to help collectors manage their Amiibo collections.</p>
     </div>
-    <script src="{% static 'js/bootstrap.min.js' %}"></script>
-  </body>
+
+    <!-- What is an Amiibo Section -->
+    <div class="card-container">
+      <h2 class="section-heading">What is an Amiibo?</h2>
+      <p>
+        An Amiibo is a collectible figurine of a Nintendo character from various series. Amiibos are very popular to collect, and this application helps collectors manage and track their collections.
+      </p>
+    </div>
+
+    <!-- Features List -->
+    <div class="card-container">
+      <h2 class="section-heading">This application allows you to:</h2>
+      <ul>
+        <li>Add new Amiibos based on name, series, condition, and ownership.</li>
+        <li>View a list of all the Amiibos in your collection.</li>
+        <li>Search for specific Amiibos using name, series, condition, and ownership.</li>
+        <li>Edit your collection list if things change in your collection.</li>
+      </ul>
+    </div>
+
+    <!-- Start Button -->
+    <div class="text-center">
+      <a href="{% url 'add_Amiibo' %}" class="btn">
+        Start here—your collection awaits!
+      </a>
+    </div>
+  </div>
+</body>
+
 </html>
